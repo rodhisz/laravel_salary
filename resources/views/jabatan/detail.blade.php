@@ -1,11 +1,11 @@
 @extends('layouts.template')
 
 @section('tab')
-Detail Tunjangan
+Detail Jabatan
 @endsection
 
 @section('title')
-Detail Tunjangan
+Detail Jabatan
 @endsection
 
 @section('content')
@@ -15,17 +15,17 @@ Detail Tunjangan
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    Detail Tunjangan
+                    Detail Jabatan
                 </div>
                 <div class="card-body">
                     <table class="table table-hover">
                         <tr>
-                            <th>Nama Tunjangan</th>
-                            <th>{{$tunjangan->nama_tunjangan}}</th>
+                            <th>Nama Jabatan</th>
+                            <th>{{$jabatan->nama_jabatan}}</th>
                         </tr>
                         <tr>
-                            <th>Nominal</th>
-                            <th>Rp. {{number_format($tunjangan->nominal)}}</th>
+                            <th>Gaji Pokok</th>
+                            <th>Rp. {{number_format($jabatan->gaji_pokok)}}</th>
                         </tr>
                     </table>
                 </div>

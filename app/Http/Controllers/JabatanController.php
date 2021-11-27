@@ -2,21 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Tunjangan;
+use App\Jabatan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class TunjanganController extends Controller
+class JabatanController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        $tunjangan = Tunjangan::paginate(10);
-        return view('tunjangan.index', compact('tunjangan'));
+        $jabatan = Jabatan::paginate(10);
+        return view('jabatan.index', compact('jabatan'));
     }
 
     /**
@@ -39,76 +39,76 @@ class TunjanganController extends Controller
     {
         $input = $request->all();
         $validator = Validator::make($input, [
-            'nama_tunjangan' => 'max:50',
-            'nominal' => 'max:9',
+            'nama_jabatan' => 'max:50',
+            'gaji_pokok' => 'max:9',
         ]);
         if($validator->fails())
         {
             return back()->withInput();
         }
 
-        Tunjangan::create($input);
-        return redirect('/tunjangan');
+        Jabatan::create($input);
+        return redirect('/jabatan');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Tunjangan  $tunjangan
+     * @param  \App\Jabatan  $jabatan
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        $tunjangan = Tunjangan::find($id);
-        return view('tunjangan.detail', compact('tunjangan'));
+        $jabatan = Jabatan::find($id);
+        return view('jabatan.detail', compact('jabatan'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Tunjangan  $tunjangan
+     * @param  \App\Jabatan  $jabatan
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        $tunjangan = Tunjangan::find($id);
-        return view('tunjangan.edit', compact('tunjangan'));
+        $jabatan = Jabatan::find($id);
+        return view('jabatan.edit', compact('jabatan'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Tunjangan  $tunjangan
+     * @param  \App\Jabatan  $jabatan
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        $tunjangan = Tunjangan::find($id);
+        $jabatan = Jabatan::find($id);
 
         $input = $request->all();
         $validator = Validator::make($input, [
-            'nama_tunjangan' => 'max:50',
-            'nominal' => 'max:9',
+            'nama_jabatan' => 'max:50',
+            'gaji_pokok' => 'max:9',
         ]);
         if($validator->fails())
         {
             return back()->withInput();
         }
 
-        $tunjangan -> update($input);
-        return redirect('/tunjangan');
+        $jabatan -> update($input);
+        return redirect('/jabatan');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Tunjangan  $tunjangan
+     * @param  \App\Jabatan  $jabatan
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        $data = Tunjangan::find($id);
+        $data = Jabatan::find($id);
         $data->delete();
         return back();
     }

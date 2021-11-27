@@ -25,4 +25,6 @@ Route::match(["get", "post"], "/register", function(){
 
 Route::resource('tunjangan', 'TunjanganController');
 
+Route::resource('jabatan', 'JabatanController');
+
 

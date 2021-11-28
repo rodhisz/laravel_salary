@@ -27,4 +27,18 @@ Route::resource('tunjangan', 'TunjanganController');
 
 Route::resource('jabatan', 'JabatanController');
 
+Route::resource('berita', 'BeritaController');
+
+Route::resource('konten', 'KontenController');
+
+Route::resource('karyawan', 'KaryawanController');
+
+Route::get('list-karyawan', 'PenggajianController@index');
+
+Route::get('create-gaji/{id}', 'PenggajianController@create_penggajian');
+
+Route::post('post_penggajian', 'PenggajianController@store');
+
+Route::get('riwayat_penggajian/{id}', 'PenggajianController@detail');
+
 

@@ -1,11 +1,11 @@
 @extends('layouts.template')
 
 @section('tab')
-Halaman Jabatan
+Halaman Berita
 @endsection
 
 @section('title')
-Halaman Jabatan
+Halaman Berita
 @endsection
 
 @section('content')
@@ -21,23 +21,25 @@ Halaman Jabatan
                         <thead>
                             <tr class="text-center">
                                 <th>No.</th>
-                                <th>Nama Jabatan</th>
-                                <th>Gaji Pokok</th>
+                                <th>Judul Berita</th>
+                                <th>Penerbit</th>
+                                <th>Tanggal Terbit</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($jabatan as $row)
+                            @foreach ($berita as $row)
                             <tr class="text-center">
-                                <td>{{$loop->iteration + ($jabatan->perpage() * ($jabatan->currentpage() -1)) }}</td>
-                                <td>{{$row->nama_jabatan}}</td>
-                                <td>Rp. {{number_format($row->gaji_pokok)}}</td>
+                                <td>{{$loop->iteration + ($berita->perpage() * ($berita->currentpage() -1)) }}</td>
+                                <td>{{$row->judul_berita}}</td>
+                                <td>{{($row->penerbit)}}</td>
+                                <td>{{($row->tanggal_terbit)}}</td>
                                 <td>
-                                    <form action="{{route('jabatan.destroy', $row->id)}}" onsubmit="return confirm('Hapus {{$row->nama_jabatan}}?')" method="post">
+                                    <form action="{{route('berita.destroy', $row->id)}}" onsubmit="return confirm('Hapus Berita {{$row->judul_berita}} ?')" method="post">
                                     @csrf
                                     @method('delete')
-                                        <a href="{{route('jabatan.show', $row->id)}}" class="btn btn-primary"><i class="fa fa-eye"></i> Detail</a>
-                                        <a href="{{route('jabatan.edit', $row->id)}}" class="btn btn-warning"><i class="fa fa-edit"></i> Edit</a>
+                                        <a href="{{route('berita.show', $row->id)}}" class="btn btn-primary"><i class="fa fa-eye"></i> Detail</a>
+                                        <a href="{{route('berita.edit', $row->id)}}" class="btn btn-warning"><i class="fa fa-edit"></i> Edit</a>
                                         <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i> Delete</button>
                                     </form>
                                 </td>
@@ -45,7 +47,7 @@ Halaman Jabatan
                             @endforeach
                         </tbody>
                     </table>
-                    {{$jabatan->appends(Request::all())->links()}}
+                    {{$berita->appends(Request::all())->links()}}
                 </div>
             </div>
         </div>
@@ -55,21 +57,25 @@ Halaman Jabatan
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabelLogout">Tambah Jabatan</h5>
+                                    <h5 class="modal-title" id="exampleModalLabelLogout">Tambah berita</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-                                <form action="{{route('jabatan.store')}}" method="post">
+                                <form action="{{route('berita.store')}}" method="post">
                                     @csrf
                                     <div class="modal-body">
                                         <div class="form-group">
-                                            <label class="form-label">Nama Jabatan</label>
-                                            <input type="text" name="nama_jabatan" value="{{old('nama_jabatan')}}" required='required' class="form-control">
+                                            <label class="form-label">Judul berita</label>
+                                            <input type="text" name="judul_berita" value="{{old('judul_berita')}}" required='required' class="form-control">
                                         </div>
                                         <div class="form-group">
-                                            <label class="form-label">Gaji Pokok</label>
-                                            <input type="number" name="gaji_pokok" value="{{old('gaji_pokok')}}" required='required' class="form-control">
+                                            <label class="form-label">Isi Berita</label>
+                                            <textarea name="isi_berita" required='required' class="form-control" rows="5">{{old('isi_berita')}}</textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Penerbit</label>
+                                            <input type="text" name="penerbit" value="{{old('penerbit')}}" required='required' class="form-control">
                                         </div>
                                     </div>
                                     <div class="modal-footer">

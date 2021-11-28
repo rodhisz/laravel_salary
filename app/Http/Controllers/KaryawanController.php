@@ -2,22 +2,24 @@
 
 namespace App\Http\Controllers;
 
+use App\Karyawan;
 use App\Jabatan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Arr;
 
-class JabatanController extends Controller
+class KaryawanController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $jabatan = Jabatan::paginate(10);
-        return view('jabatan.index', compact('jabatan'));
+        $karyawan = Karyawan::paginate(5);
+        $jabatan = Jabatan::all();
+        return view('karyawan.index', compact('karyawan', 'jabatan'));
     }
 
     /**
@@ -40,78 +42,96 @@ class JabatanController extends Controller
     {
         $input = $request->all();
         $validator = Validator::make($input, [
-            'nama_jabatan' => 'max:50',
-            'gaji_pokok' => 'max:9',
+            'nama_karyawan' => 'max:20',
+            'nomor_hp'      => 'max:13',
+            'username'      => 'max:20',
+            'password'      => 'min:4 | max:20',
         ]);
+
         if($validator->fails())
         {
             return back()->withInput();
         }
 
-        Jabatan::create($input);
-        Alert::success('Berhasil', 'Data Berhasil Disimpan');
-        return redirect('/jabatan');
+        $input['password'] = password_hash($request->input('password'), PASSWORD_DEFAULT);
+        $input['tanggal_masuk'] = date('Y-m-d');
+        Karyawan::create($input);
+        return redirect('/karyawan');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Jabatan  $jabatan
+     * @param  \App\Karyawan  $karyawan
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        $jabatan = Jabatan::find($id);
-        return view('jabatan.detail', compact('jabatan'));
+        $karyawan = Karyawan::find($id);
+        $jabatan = Jabatan::all();
+        return view('karyawan.detail', compact('karyawan', 'jabatan'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Jabatan  $jabatan
+     * @param  \App\Karyawan  $karyawan
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        $jabatan = Jabatan::find($id);
-        return view('jabatan.edit', compact('jabatan'));
+        $karyawan = Karyawan::find($id);
+        $jabatan = Jabatan::all();
+        return view('karyawan.edit', compact('karyawan', 'jabatan'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Jabatan  $jabatan
+     * @param  \App\Karyawan  $karyawan
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        $jabatan = Jabatan::find($id);
-
+        $karyawan = Karyawan::find($id);
         $input = $request->all();
         $validator = Validator::make($input, [
-            'nama_jabatan' => 'max:50',
-            'gaji_pokok' => 'max:9',
+            'nama_karyawan' => 'max:20',
+            'nomor_hp'      => 'max:13',
+            'username'      => 'max:20',
         ]);
+
         if($validator->fails())
         {
             return back()->withInput();
         }
 
-        $jabatan -> update($input);
-        return redirect('/jabatan');
+        if($request->input('password'))
+        {
+            $input['password'] = password_hash($request->input('password'), PASSWORD_DEFAULT);
+        }
+        else
+        {
+            $input = Arr::except($input, ['password']);
+        }
+
+        $input['tanggal_masuk'] = date('Y-m-d');
+        $karyawan->update($input);
+        return redirect('/karyawan');
+
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Jabatan  $jabatan
+     * @param  \App\Karyawan  $karyawan
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        $data = Jabatan::find($id);
-        $data->delete();
+        $karyawan = Karyawan::find($id);
+        $karyawan->delete();
         return back();
     }
 }

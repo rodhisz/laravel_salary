@@ -77,6 +77,7 @@
 
                     <!-- Content -->
 
+                    @include('sweetalert::alert')
                     @yield('content')
 
 

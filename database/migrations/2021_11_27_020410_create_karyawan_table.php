@@ -17,7 +17,7 @@ class CreateKaryawanTable extends Migration
             $table->Increments('id');
             $table->integer('id_jabatan')->unsigned();
             $table->string('nama_karyawan');
-            $table->enum('status', ['tetap', 'kontrak' , 'magang']);
+            $table->enum('status', ['Tetap', 'Kontrak' , 'Magang']);
             $table->date('tanggal_masuk');
             $table->string('nomor_hp')->unique();
             $table->string('username')->unique();

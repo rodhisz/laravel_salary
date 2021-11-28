@@ -19,7 +19,7 @@ Halaman Tunjangan
                 <div class="card-body">
                     <table class="table table-hover">
                         <thead>
-                            <tr>
+                            <tr class="text-center">
                                 <th>No.</th>
                                 <th>Tunjangan</th>
                                 <th>Nominal</th>
@@ -28,7 +28,7 @@ Halaman Tunjangan
                         </thead>
                         <tbody>
                             @foreach ($tunjangan as $row)
-                            <tr>
+                            <tr class="text-center">
                                 <td>{{$loop->iteration + ($tunjangan->perpage() * ($tunjangan->currentpage() -1)) }}</td>
                                 <td>{{$row->nama_tunjangan}}</td>
                                 <td>Rp. {{number_format($row->nominal)}}</td>
@@ -37,7 +37,7 @@ Halaman Tunjangan
                                     @csrf
                                     @method('delete')
                                         <a href="{{route('tunjangan.show', $row->id)}}" class="btn btn-primary"><i class="fa fa-eye"></i> Detail</a>
-                                        <a href="{{route('tunjangan.edit', $row->id)}}" class="btn btn-warning"><i class="fa fa-pencil"></i> Edit</a>
+                                        <a href="{{route('tunjangan.edit', $row->id)}}" class="btn btn-warning"><i class="fa fa-edit"></i> Edit</a>
                                         <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i> Delete</button>
                                     </form>
                                 </td>

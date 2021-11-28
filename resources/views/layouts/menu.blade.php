@@ -27,12 +27,12 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/penggajian">
+        <a class="nav-link" href="/list-karyawan">
           <i class="fas fa-fw fa-exchange-alt"></i>
           <span>Penggajian</span>
         </a>
       </li>
-      
+
       <li class="nav-item">
         <a class="nav-link" href="/konten">
           <i class="fas fa-fw fa-newspaper"></i>

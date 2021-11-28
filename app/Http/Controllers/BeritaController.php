@@ -2,22 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Jabatan;
+use App\Berita;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use RealRashid\SweetAlert\Facades\Alert;
 
-class JabatanController extends Controller
+class BeritaController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $jabatan = Jabatan::paginate(10);
-        return view('jabatan.index', compact('jabatan'));
+        $berita = Berita::paginate(5);
+        return view('berita.index', compact('berita'));
     }
 
     /**
@@ -39,78 +38,62 @@ class JabatanController extends Controller
     public function store(Request $request)
     {
         $input = $request->all();
-        $validator = Validator::make($input, [
-            'nama_jabatan' => 'max:50',
-            'gaji_pokok' => 'max:9',
-        ]);
-        if($validator->fails())
-        {
-            return back()->withInput();
-        }
-
-        Jabatan::create($input);
-        Alert::success('Berhasil', 'Data Berhasil Disimpan');
-        return redirect('/jabatan');
+        $input['tanggal_terbit'] = date('Y-m-d');
+        Berita::create($input);
+        // dd($input);
+        return redirect('/berita');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Jabatan  $jabatan
+     * @param  \App\Berita  $berita
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        $jabatan = Jabatan::find($id);
-        return view('jabatan.detail', compact('jabatan'));
+        $berita = Berita::find($id);
+        return view('berita.detail', compact('berita'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Jabatan  $jabatan
+     * @param  \App\Berita  $berita
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        $jabatan = Jabatan::find($id);
-        return view('jabatan.edit', compact('jabatan'));
+        $berita = Berita::find($id);
+        return view('berita.edit', compact('berita'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Jabatan  $jabatan
+     * @param  \App\Berita  $berita
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        $jabatan = Jabatan::find($id);
+        $berita = Berita::find($id);
 
         $input = $request->all();
-        $validator = Validator::make($input, [
-            'nama_jabatan' => 'max:50',
-            'gaji_pokok' => 'max:9',
-        ]);
-        if($validator->fails())
-        {
-            return back()->withInput();
-        }
-
-        $jabatan -> update($input);
-        return redirect('/jabatan');
+        $input['tanggal_terbit'] = date('Y-m-d');
+        $berita -> update($input);
+        return redirect('/berita');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Jabatan  $jabatan
+     * @param  \App\Berita  $berita
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        $data = Jabatan::find($id);
+        $data = Berita::find($id);
         $data->delete();
         return back();
     }
